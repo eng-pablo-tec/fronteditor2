@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Editor com 2 CSS lado a lado</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      resize: vertical;
+      padding: 8px;
+      font-family: monospace;
+      font-size: 14px;
+      margin-bottom: 8px;
+    }
+
+    #editor-container {
+      padding: 10px;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .css-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .css-box {
+      flex: 1;
+    }
+
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: 1px solid #ccc;
+      margin-top: 10px;
+    }
+
+    button {
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
+      font-size: 16px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    @media (min-width: 600px) {
+      textarea {
+        min-height: 120px;
+      }
+
+      iframe {
+        height: 400px;
+      }
+
+      .css-container {
+        flex-direction: row;
+      }
+
+      .css-box {
+        width: 50%;
+        margin-right: 5px;
+      }
+
+      .css-box:last-child {
+        margin-right: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="editor-container">
+    <label>HTML:</label>
+    <textarea id="html-code" placeholder="Digite seu HTML aqui...">&lt;h1&gt;Olá mundo!&lt;/h1&gt;</textarea>
+
+    <div class="css-container">
+      <div class="css-box">
+        <label>style.css:</label>
+        <textarea id="css-code1" placeholder="Conteúdo de style.css...">
+body {
+  background: lightblue;
+}
+        </textarea>
+      </div>
+      <div class="css-box">
+        <label>style2.css:</label>
+        <textarea id="css-code2" placeholder="Conteúdo de style2.css...">
+h1 {
+  color: darkblue;
+  text-align: center;
+}
+        </textarea>
+      </div>
+    </div>
+
+    <label>JavaScript:</label>
+    <textarea id="js-code" placeholder="Digite seu JS aqui...">console.log('Olá do JS!');</textarea>
+
+    <button onclick="executarCodigo()">Executar Código</button>
+
+    <iframe id="preview"></iframe>
+  </div>
+
+  <script>
+    function executarCodigo() {
+      const html = document.getElementById('html-code').value;
+      const css1 = document.getElementById('css-code1').value;
+      const css2 = document.getElementById('css-code2').value;
+      const js = document.getElementById('js-code').value;
+
+      const output = `
+        <html>
+          <head>
+            <style>${css1}</style>
+            <style>${css2}</style>
+          </head>
+          <body>
+            ${html}
+            <script>${js}<\/script>
+          </body>
+        </html>
+      `;
+
+      const iframe = document.getElementById('preview');
+      iframe.srcdoc = output;
+    }
+
+    window.onload = executarCodigo;
+  </script>
+</body>
+</html>
