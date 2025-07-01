@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Editor Sombrio com Rachaduras</title>
+  <title>Editor com Tema Claro e Terror</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -14,46 +14,32 @@
     body {
       margin: 0;
       font-family: 'Share Tech Mono', monospace;
-      background: url('https://images.unsplash.com/photo-1601987077032-bc0b988ad3f6?auto=format&fit=crop&w=1400&q=60') no-repeat center center fixed;
-      background-size: cover;
-      color: #ffffff;
+      transition: background 0.3s, color 0.3s;
     }
 
-    #editor-container {
-      padding: 14px;
-      background-color: rgba(20, 20, 20, 0.85);
+    .editor-container {
+      padding: 16px;
       min-height: 100vh;
-      backdrop-filter: brightness(1.1);
-      box-shadow: inset 0 0 20px #000;
+      transition: background 0.3s;
     }
 
     label {
       display: block;
       margin: 14px 0 6px;
       font-size: 14px;
-      color: #ff5555;
-      text-shadow: 0 0 4px #ffbbbb;
     }
 
     textarea {
       width: 100%;
-      min-height: 110px;
+      min-height: 100px;
       resize: vertical;
       padding: 12px;
-      font-family: 'Share Tech Mono', monospace;
       font-size: 15px;
-      background: #0c0c0c;
-      color: #ffffff;
-      border: 2px solid #ff5555;
-      border-radius: 10px;
-      box-shadow: 0 0 10px #ff444455, inset 0 0 8px #ffffff11;
-      transition: all 0.3s ease;
-    }
-
-    textarea:focus {
-      outline: none;
-      border-color: #ffffffcc;
-      box-shadow: 0 0 10px #ffffffaa;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: 0.3s;
+      background: #fff;
+      color: #000;
     }
 
     .css-container {
@@ -69,42 +55,87 @@
     iframe {
       width: 100%;
       height: 300px;
-      border: 2px solid #ff4444;
+      border: 1px solid #ccc;
       margin-top: 18px;
-      border-radius: 10px;
+      border-radius: 8px;
       background: #fff;
-      box-shadow: 0 0 14px #ff333344;
     }
 
     button {
-      background: #121212;
-      color: #ffffff;
-      border: 2px solid #ff4444;
-      padding: 14px;
+      background: #007bff;
+      color: white;
+      border: none;
+      padding: 12px;
       font-size: 16px;
       width: 100%;
       cursor: pointer;
-      border-radius: 8px;
+      border-radius: 6px;
       margin-top: 12px;
-      box-shadow: 0 0 10px #ff4444aa;
-      font-weight: bold;
       transition: 0.3s;
     }
 
     button:hover {
-      background: #1c1c1c;
-      box-shadow: 0 0 14px #ffffffaa, inset 0 0 6px #ff4444aa;
+      background: #0056b3;
+    }
+
+    #theme-toggle {
+      background: #333;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    /* Tema Claro */
+    body.light {
+      background: #f8f8f8;
+      color: #111;
+    }
+
+    body.light textarea {
+      background: #fff;
+      color: #111;
+      border: 1px solid #ccc;
+    }
+
+    body.light iframe {
+      border: 1px solid #ccc;
+    }
+
+    body.light button {
+      background: #007bff;
+      color: white;
+    }
+
+    /* Tema Terror */
+    body.dark {
+      background: url('https://images.unsplash.com/photo-1601987077032-bc0b988ad3f6?auto=format&fit=crop&w=1400&q=60') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+    }
+
+    body.dark .editor-container {
+      background: rgba(10, 10, 10, 0.85);
+    }
+
+    body.dark textarea {
+      background: #fff;
+      color: #000;
+      border: 1px solid #ff4444;
+    }
+
+    body.dark iframe {
+      border: 2px solid #ff4444;
+    }
+
+    body.dark button {
+      background: #ff4444;
+      color: white;
+    }
+
+    body.dark button:hover {
+      background: #cc0000;
     }
 
     @media (min-width: 600px) {
-      textarea {
-        min-height: 120px;
-      }
-
-      iframe {
-        height: 400px;
-      }
-
       .css-container {
         flex-direction: row;
       }
@@ -112,43 +143,40 @@
       .css-box {
         width: 50%;
       }
+
+      textarea {
+        min-height: 120px;
+      }
+
+      iframe {
+        height: 400px;
+      }
     }
   </style>
 </head>
-<body>
+<body class="light">
 
-  <div id="editor-container">
+  <div class="editor-container">
+    <button id="theme-toggle">🌑 Mudar para Tema Terror</button>
+
     <label>HTML:</label>
-    <textarea id="html-code" placeholder="Digite seu HTML aqui...">&lt;h1&gt;💀 Editor da Escuridão&lt;/h1&gt;</textarea>
+    <textarea id="html-code" placeholder="Digite seu HTML aqui..."></textarea>
 
     <div class="css-container">
       <div class="css-box">
         <label>style.css:</label>
-        <textarea id="css-code1" placeholder="Conteúdo de style.css...">
-body {
-  background-color: #0e0e0e;
-}
-        </textarea>
+        <textarea id="css-code1" placeholder="Digite seu CSS principal..."></textarea>
       </div>
       <div class="css-box">
         <label>style2.css:</label>
-        <textarea id="css-code2" placeholder="Conteúdo de style2.css...">
-h1 {
-  color: #ffffff;
-  text-shadow: 0 0 12px #ff4444;
-  text-align: center;
-  margin-top: 40px;
-}
-        </textarea>
+        <textarea id="css-code2" placeholder="Digite seu CSS secundário..."></textarea>
       </div>
     </div>
 
     <label>JavaScript:</label>
-    <textarea id="js-code" placeholder="Digite seu JS aqui...">
-console.log('Você acordou algo...');
-    </textarea>
+    <textarea id="js-code" placeholder="Digite seu JavaScript aqui..."></textarea>
 
-    <button onclick="executarCodigo()">👁️ Executar Código</button>
+    <button onclick="executarCodigo()">💻 Executar Código</button>
 
     <iframe id="preview"></iframe>
   </div>
@@ -175,6 +203,18 @@ console.log('Você acordou algo...');
 
       document.getElementById('preview').srcdoc = output;
     }
+
+    // Alternar Tema
+    const btn = document.getElementById("theme-toggle");
+    btn.addEventListener("click", () => {
+      const body = document.body;
+      const isLight = body.classList.contains("light");
+
+      body.classList.toggle("light", !isLight);
+      body.classList.toggle("dark", isLight);
+
+      btn.textContent = isLight ? "🌞 Mudar para Tema Claro" : "🌑 Mudar para Tema Terror";
+    });
 
     window.onload = executarCodigo;
   </script>
