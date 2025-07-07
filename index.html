@@ -20,7 +20,6 @@
     .editor-container {
       padding: 16px;
       min-height: 100vh;
-      transition: background 0.3s;
     }
 
     .top-buttons {
@@ -59,7 +58,6 @@
       font-size: 15px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      transition: 0.3s;
       background: #fff;
       color: #000;
     }
@@ -73,22 +71,15 @@
       background: #fff;
     }
 
-    .flex {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-
     .half {
       flex: 1;
       min-width: 300px;
     }
 
-    /* Layout A: padrão */
+    /* Layout A */
     body.layout-a .html-css {
       display: flex;
       gap: 20px;
-      flex-wrap: wrap;
     }
 
     body.layout-a .js-section,
@@ -97,11 +88,15 @@
       margin-top: 20px;
     }
 
-    /* Layout B: preview ao lado do JS */
+    /* Layout B */
+    body.layout-b .html-css {
+      display: flex;
+      gap: 20px;
+    }
+
     body.layout-b .layout-b-content {
       display: flex;
       gap: 20px;
-      flex-wrap: wrap;
     }
 
     body.layout-b .layout-b-left,
@@ -158,6 +153,15 @@
     body.dark button:hover {
       background: #cc0000;
     }
+
+    /* RESPONSIVIDADE */
+    @media (max-width: 600px) {
+      body.layout-a .html-css,
+      body.layout-b .html-css,
+      body.layout-b .layout-b-content {
+        flex-direction: column;
+      }
+    }
   </style>
 </head>
 <body class="light layout-a">
@@ -198,7 +202,7 @@
 
     <!-- FORMATO B -->
     <div id="layout-b" style="display: none;">
-      <div class="html-css flex">
+      <div class="html-css">
         <div class="half">
           <label>HTML:</label>
           <textarea id="html-code-b" placeholder="Digite seu HTML aqui..."></textarea>
