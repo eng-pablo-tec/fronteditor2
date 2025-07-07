@@ -73,7 +73,7 @@
 
     .half {
       flex: 1;
-      min-width: 300px;
+      min-width: 0;
     }
 
     /* Layout A */
@@ -89,32 +89,32 @@
       margin-top: 20px;
     }
 
-    /* Layout B com 2 linhas (HTML+CSS, depois JS+Preview) */
+    /* Layout B (HTML + CSS, depois JS + Preview) */
     body.layout-b .html-css,
     body.layout-b .layout-b-content {
       display: flex;
-      gap: 20px;
-      flex-wrap: nowrap;
-      overflow-x: auto;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
     body.layout-b .half,
     body.layout-b .layout-b-left,
     body.layout-b .layout-b-right {
-      min-width: 50%;
+      flex: 1;
+      min-width: 0;
     }
 
+    /* Responsivo: para celular (até 600px), Formato B empilha */
     @media (max-width: 600px) {
       body.layout-b .html-css,
       body.layout-b .layout-b-content {
-        flex-wrap: nowrap;
-        overflow-x: auto;
+        flex-direction: column;
       }
 
       body.layout-b .half,
       body.layout-b .layout-b-left,
       body.layout-b .layout-b-right {
-        min-width: 300px;
+        width: 100%;
       }
     }
 
