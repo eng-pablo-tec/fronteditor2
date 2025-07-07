@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Editor HTML, CSS, JS</title>
+  <title>Editor com Layout A/B e Tema</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
 
@@ -14,95 +14,240 @@
     body {
       margin: 0;
       font-family: 'Share Tech Mono', monospace;
-      background: #f8f8f8;
-      color: #111;
+      transition: background 0.3s, color 0.3s;
     }
 
     .editor-container {
       padding: 16px;
       min-height: 100vh;
+      transition: background 0.3s;
     }
 
-    .linha-superior {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-    }
-
-    .editor-box {
+    .top-buttons {
       display: flex;
-      flex-direction: column;
-    }
-
-    label {
-      font-size: 14px;
-      margin-bottom: 4px;
-    }
-
-    textarea {
-      width: 100%;
-      height: 200px;
-      padding: 12px;
-      font-size: 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      resize: vertical;
-    }
-
-    #js-box {
-      margin-top: 16px;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
 
     button {
-      margin-top: 16px;
-      padding: 12px;
-      font-size: 16px;
       background: #007bff;
       color: white;
       border: none;
-      border-radius: 6px;
+      padding: 12px;
+      font-size: 16px;
       cursor: pointer;
+      border-radius: 6px;
+      transition: 0.3s;
     }
 
     button:hover {
       background: #0056b3;
     }
 
+    label {
+      display: block;
+      margin: 14px 0 6px;
+      font-size: 14px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 100px;
+      resize: vertical;
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      transition: 0.3s;
+      background: #fff;
+      color: #000;
+    }
+
     iframe {
       width: 100%;
       height: 300px;
       border: 1px solid #ccc;
+      margin-top: 18px;
       border-radius: 8px;
-      margin-top: 16px;
+      background: #fff;
+    }
+
+    .flex {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .half {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    /* Layout A: padrão */
+    body.layout-a .html-css {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    body.layout-a .js-section,
+    body.layout-a .btn-section,
+    body.layout-a .preview-section {
+      margin-top: 20px;
+    }
+
+    /* Layout B: preview ao lado do JS */
+    body.layout-b .layout-b-content {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    body.layout-b .layout-b-left,
+    body.layout-b .layout-b-right {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    /* Tema Claro */
+    body.light {
+      background: #f8f8f8;
+      color: #111;
+    }
+
+    body.light textarea {
+      background: #fff;
+      color: #111;
+      border: 1px solid #ccc;
+    }
+
+    body.light iframe {
+      border: 1px solid #ccc;
+    }
+
+    body.light button {
+      background: #007bff;
+      color: white;
+    }
+
+    /* Tema Escuro */
+    body.dark {
+      background: #121212;
+      color: #eee;
+    }
+
+    body.dark .editor-container {
+      background: #1e1e1e;
+    }
+
+    body.dark textarea {
+      background: #2c2c2c;
+      color: #fff;
+      border: 1px solid #ff4444;
+    }
+
+    body.dark iframe {
+      border: 2px solid #ff4444;
+    }
+
+    body.dark button {
+      background: #ff4444;
+    }
+
+    body.dark button:hover {
+      background: #cc0000;
     }
   </style>
 </head>
-<body>
+<body class="light layout-a">
   <div class="editor-container">
-    <div class="linha-superior">
-      <div class="editor-box">
-        <label for="html-code">HTML:</label>
-        <textarea id="html-code" placeholder="Digite seu HTML aqui..."></textarea>
+    <div class="top-buttons">
+      <button onclick="setTema('light')">🌞 Tema Claro</button>
+      <button onclick="setTema('dark')">🌑 Tema Escuro</button>
+      <button onclick="setLayout('a')">🅰️ Formato A</button>
+      <button onclick="setLayout('b')">🅱️ Formato B</button>
+    </div>
+
+    <!-- FORMATO A -->
+    <div id="layout-a" style="display: block;">
+      <div class="html-css">
+        <div class="half">
+          <label>HTML:</label>
+          <textarea id="html-code" placeholder="Digite seu HTML aqui..."></textarea>
+        </div>
+        <div class="half">
+          <label>CSS:</label>
+          <textarea id="css-code1" placeholder="Digite seu CSS aqui..."></textarea>
+        </div>
       </div>
-      <div class="editor-box">
-        <label for="css-code">CSS:</label>
-        <textarea id="css-code" placeholder="Digite seu CSS aqui..."></textarea>
+
+      <div class="js-section">
+        <label>JavaScript:</label>
+        <textarea id="js-code" placeholder="Digite seu JavaScript aqui..."></textarea>
+      </div>
+
+      <div class="btn-section">
+        <button onclick="executarCodigo()">💻 Executar Código</button>
+      </div>
+
+      <div class="preview-section">
+        <iframe id="preview"></iframe>
       </div>
     </div>
 
-    <div class="editor-box" id="js-box">
-      <label for="js-code">JavaScript:</label>
-      <textarea id="js-code" placeholder="Digite seu JavaScript aqui..."></textarea>
-    </div>
+    <!-- FORMATO B -->
+    <div id="layout-b" style="display: none;">
+      <div class="html-css flex">
+        <div class="half">
+          <label>HTML:</label>
+          <textarea id="html-code-b" placeholder="Digite seu HTML aqui..."></textarea>
+        </div>
+        <div class="half">
+          <label>CSS:</label>
+          <textarea id="css-code1-b" placeholder="Digite seu CSS aqui..."></textarea>
+        </div>
+      </div>
 
-    <button onclick="executarCodigo()">💻 Executar Código</button>
-    <iframe id="preview"></iframe>
+      <div class="layout-b-content">
+        <div class="layout-b-left">
+          <label>JavaScript:</label>
+          <textarea id="js-code-b" placeholder="Digite seu JavaScript aqui..."></textarea>
+          <button onclick="executarCodigoB()">💻 Executar Código</button>
+        </div>
+        <div class="layout-b-right">
+          <label>Resultado:</label>
+          <iframe id="preview-b"></iframe>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
+    function setTema(tema) {
+      document.body.classList.remove("light", "dark");
+      document.body.classList.add(tema);
+    }
+
+    function setLayout(layout) {
+      const layoutA = document.getElementById('layout-a');
+      const layoutB = document.getElementById('layout-b');
+      document.body.classList.remove("layout-a", "layout-b");
+
+      if (layout === 'a') {
+        layoutA.style.display = 'block';
+        layoutB.style.display = 'none';
+        document.body.classList.add("layout-a");
+      } else {
+        layoutA.style.display = 'none';
+        layoutB.style.display = 'block';
+        document.body.classList.add("layout-b");
+      }
+    }
+
     function executarCodigo() {
       const html = document.getElementById('html-code').value;
-      const css = document.getElementById('css-code').value;
+      const css = document.getElementById('css-code1').value;
       const js = document.getElementById('js-code').value;
 
       const output = `
@@ -116,11 +261,32 @@
           </body>
         </html>
       `;
-
       document.getElementById('preview').srcdoc = output;
     }
 
-    window.onload = executarCodigo;
+    function executarCodigoB() {
+      const html = document.getElementById('html-code-b').value;
+      const css = document.getElementById('css-code1-b').value;
+      const js = document.getElementById('js-code-b').value;
+
+      const output = `
+        <html>
+          <head>
+            <style>${css}</style>
+          </head>
+          <body>
+            ${html}
+            <script>${js}<\/script>
+          </body>
+        </html>
+      `;
+      document.getElementById('preview-b').srcdoc = output;
+    }
+
+    window.onload = () => {
+      executarCodigo();
+      executarCodigoB();
+    }
   </script>
 </body>
 </html>
