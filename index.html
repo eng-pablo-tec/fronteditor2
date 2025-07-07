@@ -80,6 +80,7 @@
     body.layout-a .html-css {
       display: flex;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
     body.layout-a .js-section,
@@ -88,21 +89,33 @@
       margin-top: 20px;
     }
 
-    /* Layout B */
-    body.layout-b .html-css {
-      display: flex;
-      gap: 20px;
-    }
-
+    /* Layout B com 2 linhas (HTML+CSS, depois JS+Preview) */
+    body.layout-b .html-css,
     body.layout-b .layout-b-content {
       display: flex;
       gap: 20px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
     }
 
+    body.layout-b .half,
     body.layout-b .layout-b-left,
     body.layout-b .layout-b-right {
-      flex: 1;
-      min-width: 300px;
+      min-width: 50%;
+    }
+
+    @media (max-width: 600px) {
+      body.layout-b .html-css,
+      body.layout-b .layout-b-content {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+      }
+
+      body.layout-b .half,
+      body.layout-b .layout-b-left,
+      body.layout-b .layout-b-right {
+        min-width: 300px;
+      }
     }
 
     /* Tema Claro */
@@ -152,15 +165,6 @@
 
     body.dark button:hover {
       background: #cc0000;
-    }
-
-    /* RESPONSIVIDADE */
-    @media (max-width: 600px) {
-      body.layout-a .html-css,
-      body.layout-b .html-css,
-      body.layout-b .layout-b-content {
-        flex-direction: column;
-      }
     }
   </style>
 </head>
